@@ -2,6 +2,7 @@ package org.launchcode.controllers;
 
 import org.launchcode.models.Cheese;
 import org.launchcode.models.CheeseType;
+import org.launchcode.models.data.CategoryDao;
 import org.launchcode.models.data.CheeseDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,12 +23,15 @@ import javax.validation.Valid;
 public class CheeseController {
 
     @Autowired
-    private CheeseDao cheeseDao;
+    CheeseDao cheeseDao;
+
+    @Autowired
+    CategoryDao categoryDao;
 
     // Request path: /cheese
     @RequestMapping(value = "")
     public String index(Model model) {
-
+        // will return all of the cheeses in an iterable
         model.addAttribute("cheeses", cheeseDao.findAll());
         model.addAttribute("title", "My Cheeses");
 
@@ -38,19 +42,22 @@ public class CheeseController {
     public String displayAddCheeseForm(Model model) {
         model.addAttribute("title", "Add Cheese");
         model.addAttribute(new Cheese());
-        model.addAttribute("cheeseTypes", CheeseType.values());
+        model.addAttribute("categories", categoryDao.findAll());
         return "cheese/add";
     }
 
+    // The controller is creating a  new cheese object
+    //then adding the new object to cheeseDao
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String processAddCheeseForm(@ModelAttribute  @Valid Cheese newCheese,
-                                       Errors errors, Model model) {
+                                       Errors errors, Model model, @RequestParam int categoryId) {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Cheese");
             return "cheese/add";
         }
 
+        //This save method is provided by CRUD interface
         cheeseDao.save(newCheese);
         return "redirect:";
     }
@@ -66,6 +73,7 @@ public class CheeseController {
     public String processRemoveCheeseForm(@RequestParam int[] cheeseIds) {
 
         for (int cheeseId : cheeseIds) {
+            // .delete() is also from the CRUD repository
             cheeseDao.delete(cheeseId);
         }
 
