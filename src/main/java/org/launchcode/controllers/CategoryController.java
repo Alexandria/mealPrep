@@ -48,20 +48,12 @@ public class CategoryController {
             categoryDao.save(category);
             return "redirect:";
         }
-
-        return "redirect:/add"; //redirects you to category/add
+        model.addAttribute(new Category()); //key is "category"
+        model.addAttribute("title", "Add Category");
+        return "category/add"; //redirects you to category/add
 
     }
 
-
-//    public String category(Model model, @RequestParam int id){
-//        Category cat  = categoryDao.findOne(id);
-//        List<Cheese> cheeses = cat.getCheeses();
-//        model.addAttribute("cheeses", cheeses);
-//        model.addAttribute("title", "Cheese, in Category "+cat.getName());
-//        return "cheese/index";
-//
-//    }
 
 
 
