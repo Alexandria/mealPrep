@@ -7,7 +7,7 @@
     <h1 th:text="${title}">Default Title</h1>
     <nav th:replace="fragments :: navigation"></nav>
 
-    <p th:unless="${cheeses.size()}"><i>No Cheeses yet!</i></p>
+    <p th:unless="${cheeses.size()}"><i>No Meals Yet</i></p>
 
     <table class="table">
 
@@ -26,6 +26,6 @@
     </table>
 
 
-    <p><a th:href="'/menu/add-item/' + ${menuId}">Add Cheese</a></p>
+    <p><a th:href="'/menu/add-item/' + ${menuId}">Add A Meal</a></p>
 </body>
 </html>

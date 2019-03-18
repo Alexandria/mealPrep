@@ -33,7 +33,7 @@ public class CheeseController {
     public String index(Model model) {
         // will return all of the cheeses in an iterable
         model.addAttribute("cheeses", cheeseDao.findAll());
-        model.addAttribute("title", "My Cheeses");
+        model.addAttribute("title", "Meal List");
 
         return "cheese/index";
     }
@@ -53,7 +53,7 @@ public class CheeseController {
                                        Errors errors, Model model, @RequestParam int categoryId) {
 
         if (errors.hasErrors()) {
-            model.addAttribute("title", "Add Cheese");
+            model.addAttribute("title", "Add Meal");
             model.addAttribute("categories", categoryDao.findAll());
             return "cheese/add";
         }

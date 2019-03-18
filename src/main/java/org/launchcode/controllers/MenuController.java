@@ -32,7 +32,7 @@ public class MenuController {
 
     @RequestMapping(value = "")
     public String index(Model model){
-        model.addAttribute("title", "Menus");
+        model.addAttribute("title", "This Week's Meal");
         model.addAttribute("menus", menuDao.findAll());
         return "menu/index";
     }
