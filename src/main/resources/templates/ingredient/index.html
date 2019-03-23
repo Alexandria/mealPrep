@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head">
+    <title th:text="${title}">Title</title>
+</head>
+<body>
+<h1 th:text="${title}">Default Title</h1>
+<nav th:replace="fragments :: navigation"></nav>
+
+<p th:unless="${ingredient} and ${ingredient.size()}">No ingredients just yet ! :(</p>
+
+
+<ul  th:each="ingredient : ${ingredients}">
+    <li th:text="${ingredient.name}"></li>
+</ul>
+<a href="/ingredient/add"> Add Ingredient</a> |
+<a href="/ingredient/remove"> Remove Ingredient</a>
+</body>
+</html>

@@ -7,7 +7,7 @@
     <h1 th:text="${title}">Default Title</h1>
     <nav th:replace="fragments :: navigation"></nav>
 
-    <p th:unless="${cheeses.size()}"><i>No Meals Yet</i></p>
+    <p th:unless="${meals.size()}"><i>No Meals Yet</i></p>
 
     <table class="table">
 
@@ -17,10 +17,10 @@
             <th>Category</th>
         </tr>
 
-        <tr th:each="cheese : ${cheeses}">
-            <td th:text="${cheese.name}"></td>
-            <td th:text="${cheese.description}"></td>
-            <td th:text="${cheese.category.name}"></td>
+        <tr th:each="meal : ${meals}">
+            <td th:text="${meal.name}"></td>
+            <td th:text="${meal.description}"></td>
+            <td th:text="${meal.category.name}"></td>
         </tr>
 
     </table>

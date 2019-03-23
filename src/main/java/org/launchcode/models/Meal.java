@@ -10,7 +10,7 @@ import java.util.List;
  * Created by LaunchCode
  */
 @Entity
-public class Cheese {
+public class Meal {
 
     @Id
     @GeneratedValue
@@ -27,16 +27,19 @@ public class Cheese {
     @ManyToOne
     private Category category;
 
-    @ManyToMany(mappedBy = "cheeses")
+    @ManyToMany
+    private List<Ingredient> ingredients = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "meals")
     private List<Menu> menus = new ArrayList<>();
 
-    public Cheese(String name, String description) {
+    public Meal(String name, String description) {
         this.name = name;
         this.description = description;
 
     }
 
-    public Cheese() { }
+    public Meal() { }
 
     public int getId() {
         return id;
@@ -64,5 +67,13 @@ public class Cheese {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 }

@@ -1,10 +1,9 @@
 package org.launchcode.controllers;
 
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import org.launchcode.models.Cheese;
+import org.launchcode.models.Meal;
 import org.launchcode.models.Menu;
-import org.launchcode.models.data.CheeseDao;
+import org.launchcode.models.data.MealDao;
 import org.launchcode.models.data.MenuDao;
 import org.launchcode.models.forms.AddMenuItemForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.jws.WebParam;
 import javax.validation.Valid;
-import java.lang.ref.ReferenceQueue;
 
 @Controller
 @RequestMapping(value = "menu")
@@ -28,7 +25,7 @@ public class MenuController {
     MenuDao menuDao;
 
     @Autowired
-    CheeseDao cheeseDao;
+    MealDao mealDao;
 
     @RequestMapping(value = "")
     public String index(Model model){
@@ -61,7 +58,7 @@ public class MenuController {
 
         Menu menu = menuDao.findOne(menuId);
         model.addAttribute("title", menu.getName());
-        model.addAttribute("cheeses", menu.getCheeses());
+        model.addAttribute("meals", menu.getMeals());
         model.addAttribute("menuId", menu.getId());
 
         return "menu/view";
@@ -72,7 +69,7 @@ public class MenuController {
 
         Menu menu = menuDao.findOne(menuId);
         AddMenuItemForm form = new AddMenuItemForm(
-                cheeseDao.findAll(),
+                mealDao.findAll(),
                 menu );
 
         model.addAttribute("title", "Add item to menu");
@@ -91,15 +88,15 @@ public class MenuController {
             return "menu/add-item";
         }
 
-        Cheese theCheese = cheeseDao.findOne(form.getCheeseId());
+        Meal theMeal = mealDao.findOne(form.getMealId());
         Menu theMenu = menuDao.findOne(form.getMenuId());
 
-        theMenu.addItem(theCheese);
+        theMenu.addItem(theMeal);
         menuDao.save(theMenu);
 
 
         model.addAttribute("title", theMenu.getName());
-        model.addAttribute("cheeses", theCheese);
+        model.addAttribute("meals", theMeal);
 
         return "redirect:/menu/view/"+theMenu.getId();
     }
